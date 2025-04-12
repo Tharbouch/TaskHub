@@ -1,31 +1,7 @@
-import { Progress } from "./ui/progress";
-import { cva } from "class-variance-authority";
+import { Progress } from "../../../components/ui/progress";
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
-
-const progressVariants = cva(
-  "h-full w-full flex-1 transition-all duration-700 bg-gradient-to-r",
-  {
-    variants: {
-      progress: {
-        low: "from-red-800 to-red-400",
-        medium: "from-amber-600 to-amber-400",
-        high: "from-emerald-600 to-emerald-400",
-        complete: "from-green-500 to-green-500",
-      },
-    },
-    defaultVariants: {
-      progress: "low",
-    },
-  }
-);
-
-function getProgressLevel(percent: number) {
-  if (percent === 100) return "complete";
-  if (percent >= 70) return "high";
-  if (percent >= 50) return "medium";
-  return "low";
-}
+import { StatusBadge } from "@/components/common/StatusBadge";
+import { progressVariants, getProgressLevel } from "@/utils/progress";
 
 export default function ProjectCard({
   text,
@@ -54,16 +30,7 @@ export default function ProjectCard({
     <div className="bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer rounded-lg p-6 border dark:border-4 border-gray-400 dark:border-gray-700">
       <div className="flex justify-between items-start mb-3">
         <h3 className="text-lg font-semibold">{text}</h3>
-        <span
-          className={cn(
-            "px-2 py-1 rounded-full text-xs font-medium",
-            progressPercentage === 100
-              ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
-              : "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100"
-          )}
-        >
-          {progressPercentage === 100 ? "Complete" : "In Progress"}
-        </span>
+        <StatusBadge isComplete={progressPercentage === 100} />
       </div>
 
       <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">

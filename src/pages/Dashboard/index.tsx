@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
-import SummaryCard from "@/components/SummaryCard";
-import ProjectCard from "@/components/ProjectCard";
+import SummaryCard from "@/pages/Dashboard/components/SummaryCard";
+import ProjectCard from "@/features/projects/components/ProjectCard";
 
 export default function Dashboard() {
   const [date, setDate] = useState<Date | undefined>(new Date());

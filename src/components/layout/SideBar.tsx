@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Home, ListChecks } from "lucide-react";
+import { Home, Layers } from "lucide-react";
 import { NavLink } from "react-router";
 
 type SideBarProps = {
@@ -57,8 +57,8 @@ export default function SideBar({ isOpen, toggleSidebar }: SideBarProps) {
             to="/projects"
             className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/30"
           >
-            <ListChecks size={18} />
-            <span>All Tasks</span>
+            <Layers size={18} />
+            <span>All Projects</span>
           </NavLink>
         </nav>
       </aside>

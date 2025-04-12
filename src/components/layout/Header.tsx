@@ -9,7 +9,7 @@ type HeaderProps = {
 export default function Header({ toggleSidebar }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
   return (
-    <header className="bg-white dark:bg-gray-700 shadow-lg w-full px-4 sm:px-6 lg:px-8 py-2 z-50">
+    <header className="bg-white dark:bg-gray-700 shadow-lg w-full px-4 sm:px-6 lg:px-8 py-2">
       <div className="flex items-center justify-between max-w-screen-2xl mx-auto">
         <div className="flex items-center space-x-2">
           <NavLink to="/" className="flex items-center space-x-2">

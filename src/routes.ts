@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import RootLayout from "@/layouts/Layout.tsx";
 import Dashboard from "./pages/Dashboard";
+import ProjectsPage from "./pages/Projects";
 
 const router = createBrowserRouter([
   {
@@ -9,6 +10,10 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Dashboard,
+      },
+      {
+        path: "/projects",
+        Component: ProjectsPage,
       },
     ],
   },
