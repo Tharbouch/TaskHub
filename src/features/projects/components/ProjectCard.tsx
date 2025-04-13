@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/stores/store";
@@ -39,12 +39,12 @@ export default function ProjectCard({
     totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
   // Animate the progress after mount
-  useState(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setAnimatedPercentage(progressPercentage);
     }, 100);
     return () => clearTimeout(timer);
-  });
+  }, [progressPercentage]);
 
   const handleCardClick = () => {
     navigate(`/projects/${id}`);
