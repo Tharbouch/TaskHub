@@ -31,7 +31,7 @@ export default function SummaryCard({
           >
             <ChevronUp
               className="mx-auto"
-              size={18}
+              size={24}
               aria-hidden="true"
               style={{ color: "var(--high-priority, #e53935)" }}
             />
@@ -43,7 +43,7 @@ export default function SummaryCard({
           >
             <Minus
               className="mx-auto"
-              size={18}
+              size={24}
               aria-hidden="true"
               style={{ color: "var(--medium-priority, #fb8c00)" }}
             />
@@ -55,7 +55,7 @@ export default function SummaryCard({
           >
             <ChevronDown
               className="mx-auto"
-              size={18}
+              size={24}
               aria-hidden="true"
               style={{ color: "var(--low-priority, #43a047)" }}
             />

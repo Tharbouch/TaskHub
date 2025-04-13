@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router";
-import Header from "../components/layout/Header";
-import SideBar from "../components/layout/SideBar";
+import Header from "@/components/layout/Header";
+import SideBar from "@/components/layout/SideBar";
 
 export default function RootLayout() {
   // On larger screens, we want the sidebar open by default.

@@ -53,8 +53,8 @@ function Calendar({
           buttonVariants({ variant: "outline" }),
           "h-7 w-7 bg-transparent p-0 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
         ),
-        nav_button_previous: "absolute left-1",
-        nav_button_next: "absolute right-1",
+        nav_button_previous: "absolute left-1 rounded-md",
+        nav_button_next: "absolute right-1 rounded-md",
         table: "w-full border-collapse",
         head_row: "grid grid-cols-7 mb-1",
         head_cell: "text-muted-foreground text-center text-sm py-2 font-normal",

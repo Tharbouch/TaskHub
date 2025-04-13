@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import RootLayout from "@/layouts/Layout.tsx";
 import Dashboard from "./pages/Dashboard";
 import ProjectsPage from "./pages/Projects";
+import ProjectDetails from "./pages/ProjectDetails";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/projects",
-        Component: ProjectsPage,
+        children: [
+          {
+            index: true,
+            Component: ProjectsPage,
+          },
+          {
+            path: ":projectId",
+            Component: ProjectDetails,
+          },
+        ],
       },
     ],
   },

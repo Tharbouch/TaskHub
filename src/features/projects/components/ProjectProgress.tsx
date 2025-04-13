@@ -1,4 +1,4 @@
-import { Progress } from "../../../components/ui/progress";
+import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { progressVariants, getProgressLevel } from "@/utils/progress";
 
