@@ -9,17 +9,6 @@ import { RootState, AppDispatch } from "@/stores/store";
 import { Project } from "@/types/project";
 import { Task } from "@/types/task";
 
-interface DashboardProps {
-  projects: Project[];
-  tasks: Task[];
-  projectsLoading: boolean;
-  projectsError: string | null;
-  tasksLoading: boolean;
-  tasksError: string | null;
-  fetchProjects: () => void;
-  fetchTasks: () => void;
-}
-
 // Compute summary information from the tasks list.
 // When a status is provided, only tasks with that status are used.
 const computeSummary = (tasks: Task[], status?: string) => {
@@ -38,13 +27,24 @@ const computeSummary = (tasks: Task[], status?: string) => {
   return { count, priority };
 };
 
+interface DashboardProps {
+  projects: Project[];
+  tasks: Task[];
+  projectsLoading: boolean;
+  projectsError: string | null;
+  tasksLoading?: boolean; // Make optional
+  tasksError?: string | null; // Make optional
+  fetchProjects: () => void;
+  fetchTasks: () => void;
+}
+
 const Dashboard: React.FC<DashboardProps> = ({
-  projects,
-  tasks,
-  projectsLoading,
-  projectsError,
-  fetchProjects,
-  fetchTasks,
+  projects = [], // Provide defaults
+  tasks = [],
+  projectsLoading = false,
+  projectsError = null,
+  fetchProjects = () => {}, // Default no-op function
+  fetchTasks = () => {},
 }) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
 
