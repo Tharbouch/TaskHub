@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Task, TaskFormData } from "@/types/task";
-import axios from "axios";
+import { tasksApi } from "@/services/api";
 
 interface TasksState {
   items: Task[];
@@ -22,16 +22,7 @@ const initialState: TasksState = {
 export const fetchTasks = createAsyncThunk(
   "tasks/fetchTasks",
   async (projectId?: number) => {
-    const url = projectId
-      ? `http://localhost:3000/tasks?projectId=${projectId}`
-      : "http://localhost:3000/tasks";
-    try {
-      const response = await axios.get(url);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-      throw new Error("Failed to fetch tasks");
-    }
+    return await tasksApi.getAll(projectId);
   }
 );
 
@@ -39,26 +30,7 @@ export const fetchTasks = createAsyncThunk(
 export const createTask = createAsyncThunk(
   "tasks/createTask",
   async (taskData: TaskFormData) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/tasks",
-        taskData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error creating task:", error);
-      if (axios.isAxiosError(error)) {
-        throw new Error(
-          `Failed to create task: ${error.response?.data || error.message}`
-        );
-      }
-      throw new Error(`Failed to create task: ${error}`);
-    }
+    return await tasksApi.create(taskData);
   }
 );
 
@@ -67,31 +39,7 @@ export const updateTaskStatus = createAsyncThunk(
   "tasks/updateTaskStatus",
   async ({ id, status }: { id: number; status: Task["status"] }) => {
     console.log(`Updating task ${id} to status ${status}`);
-
-    try {
-      const response = await axios.patch(
-        `http://localhost:3000/tasks/${id}`,
-        { status },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log("Task updated successfully:", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error updating task:", error);
-      if (axios.isAxiosError(error)) {
-        throw new Error(
-          `Failed to update task status: ${
-            error.response?.data || error.message
-          }`
-        );
-      }
-      throw new Error(`Failed to update task status: ${error}`);
-    }
+    return await tasksApi.updateStatus(id, status);
   }
 );
 
