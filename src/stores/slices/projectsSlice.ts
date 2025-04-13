@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Project, ProjectFormData } from "@/types/project";
-import axios from "axios";
+import { projectsApi } from "@/services/api";
 
 interface ProjectsState {
   items: Project[];
@@ -16,20 +16,11 @@ const initialState: ProjectsState = {
   error: null,
 };
 
-// Async thunk to fetch projects using axios
+// Async thunk to fetch projects using our API service
 export const fetchProjects = createAsyncThunk<Project[]>(
   "projects/fetchProjects",
   async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/projects");
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching projects:", error);
-      if (axios.isAxiosError(error)) {
-        throw new Error(`Failed to fetch projects: ${error.message}`);
-      }
-      throw new Error("Failed to fetch projects");
-    }
+    return await projectsApi.getAll();
   }
 );
 
@@ -37,46 +28,15 @@ export const fetchProjects = createAsyncThunk<Project[]>(
 export const fetchInProgressProjects = createAsyncThunk<Project[]>(
   "projects/fetchInProgressProjects",
   async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/projects", {
-        params: { status: "in_progress" },
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching in-progress projects:", error);
-      if (axios.isAxiosError(error)) {
-        throw new Error(
-          `Failed to fetch in-progress projects: ${error.message}`
-        );
-      }
-      throw new Error("Failed to fetch in-progress projects");
-    }
+    return await projectsApi.getInProgress();
   }
 );
 
-// Using axios to create a new project
+// Using API service to create a new project
 export const createProject = createAsyncThunk<Project, ProjectFormData>(
   "projects/createProject",
   async (projectData) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/projects",
-        {
-          ...projectData,
-          createdAt: new Date().toISOString(),
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error creating project:", error);
-      if (axios.isAxiosError(error)) {
-        throw new Error(`Failed to create project: ${error.message}`);
-      }
-      throw new Error("Failed to create project");
-    }
+    return await projectsApi.create(projectData);
   }
 );
 
@@ -84,38 +44,14 @@ export const updateProject = createAsyncThunk<
   Project,
   { id: number } & ProjectFormData
 >("projects/updateProject", async ({ id, ...projectData }) => {
-  try {
-    const response = await axios.patch(
-      `http://localhost:3000/projects/${id}`,
-      projectData,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error updating project:", error);
-    if (axios.isAxiosError(error)) {
-      throw new Error(`Failed to update project: ${error.message}`);
-    }
-    throw new Error("Failed to update project");
-  }
+  return await projectsApi.update(id, projectData);
 });
 
 // Delete project via API
 export const deleteProject = createAsyncThunk<number, number>(
   "projects/deleteProjectApi",
   async (id) => {
-    try {
-      await axios.delete(`http://localhost:3000/projects/${id}`);
-      return id;
-    } catch (error) {
-      console.error("Error deleting project:", error);
-      if (axios.isAxiosError(error)) {
-        throw new Error(`Failed to delete project: ${error.message}`);
-      }
-      throw new Error("Failed to delete project");
-    }
+    return await projectsApi.delete(id);
   }
 );
 
